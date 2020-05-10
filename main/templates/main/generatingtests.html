@@ -1,0 +1,115 @@
+{% include "main/navbar.html" %}
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static "css/tagcreator.css" %}">
+{% endblock %}
+
+{% if user.is_authenticated %}
+
+Welcome {{ user.username }}
+
+logout
+
+{% else %}
+
+login
+
+{% endif %}
+<title>Generating Tests</title>
+
+<script src="{% static 'js/generatingtests.js' %}"></script>
+
+
+<body onload="optionCreator()">
+<div class="wrapper">
+    <div class="container mt-5">
+        <form>
+            <div class="card">
+                <div class="row">
+                    <div class="col-sm ml-5 mt-5 mb-5" style="border-right: 1px solid black;">
+                        <h5 align="center">Exam Makeup</h5>
+                        <div class="row">
+                            <div class="row">
+                                <fieldset id="group1">
+                                   <div class="col-sm">
+                                       <input id="True/False" type="checkbox" name='True/False'>  True/False<br>
+                                       <input id="MultiChoice" type="checkbox" name='Multiple'>  Multiple Choice<br>
+                                       <input id="Matching" type="checkbox" name='Matching'>  Matching<br>
+                                       <input id="FillB" type="checkbox" name='FillInB'>  Fill In the Blank<br>
+                                       <input id="Short" type="checkbox" name='Short'>  Short Essay<br>
+                                       <input id="Essay" type="checkbox" name='Essay'>  Essay<br>
+                                       <input id="FillF" type="checkbox" name='FillInF'>  Fill In the Formula<br>
+                                   </div>
+                                </fieldset>
+
+                                <fieldset id="group2">
+                                   <div class="col-sm">
+                                       <select id="True/FalseNumber"></select><br>
+                                       <select id="MultiChoiceNumber"></select><br>
+                                       <select id="MatchingNumber"></select><br>
+                                       <select id="FillBNumber"></select><br>
+                                       <select id="ShortNumber"></select><br>
+                                       <select id="EssayNumber"></select><br>
+                                       <select id="FillFNumber"></select><br>
+                                   </div>
+                                </fieldset>
+                             </div>
+                        </div>
+                    </div>
+
+                    <!-- This section is for the exam information --->
+                    <div align="center" class="col-sm mt-5 mb-5">
+                        <h5>Exam Info</h5>
+                        <input onfocus="this.value=''" id="What Semester?" placeholder="What Semester?"><br>
+                        <input onfocus="this.value=''" id="What Year?" placeholder="What Year?"><br>
+                        <input onfocus="this.value=''" id="What Exam Number?" placeholder="What Exam Number?"><br>
+                        <input onfocus="this.value=''" id="What class?" placeholder="What class?"><br>
+                    </div>
+
+                    <!-- This section is for the tag selection -->
+                    <div align="center" class="col-sm mr-5 mt-5 mb-5" style="border-left: 1px solid black;">
+                        <h5 style="text-center"> Tag Search </h5>
+                        <input class="form-control" id="myInput" type="text" placeholder="Search...">
+                        <div id="myDIV">
+                            <form>
+                                {% if all_tags %}
+                                {% for tag in all_tags %}
+                                <ul><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"
+                                            value="{{ tag.tag_id}}" id="{{ tag.tag_id }}" onclick="passingId({{ tag.tag_name }})"
+                                            style="display:none; margin-top:15px;"> {{ tag.tag_name }} </button></ul>
+                                {% endfor %}
+                                {% endif %}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--- This section is for the exam generate button -->
+            <div class="card">
+                <div class="row mt-5 mb-5">
+                    <div class="col-sm">
+
+                    </div>
+                    <div class="col-sm" style="margin:0,auto">
+                        <div class="row">
+                            <h2 style="margin: 0 auto;">Generate test here</h2>
+                        </div>
+                        <div class="row">
+                            {% csrf_token %}
+                            <input type="submit" id="formsubmit" onclick="onButtonGenerateTest()" style="margin: 15px auto;" value="Generate">
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+
+<script type="text/javascript">
+    $.ajaxSetup({   data: {csrfmiddlewaretoken: '{{ csrf_token }}' }, }); 
+</script>

@@ -1,0 +1,80 @@
+{% include "main/navbar.html" %}
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static "css/tagcreator.css" %}">
+{% endblock %}
+
+
+<title>Test Library</title>
+
+<body>
+<div class="wrapper">
+    <div class="container" style="margin:auto; padding:50px;">
+        <div class="card">
+           <div class="row">
+                <div class="col-sm">
+                    <div class="row">
+                        <div class="col-md">
+                            <h2>Test Filter</h2>
+                            <div class="col-sm">
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect1">Example select</label>
+                                    <select class="form-control" id="exampleFormControlSelect1">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm">
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect1">Example select</label>
+                                    <select class="form-control" id="exampleFormControlSelect1">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="row">
+                        <div class="col-sm">
+                            <h2>Test Preview</h2>
+                            <div class="row">
+                                <div class="col-sm">
+                                    <div class="card" style="width: 18rem;">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Card title</h5>
+                                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <ul>
+                                        <li>Number of Students</li>
+                                        <li>Exam Average</li>
+                                        <li>Lowest Score</li>
+                                        <li>Highest Score</li>
+                                        <li>Season</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>

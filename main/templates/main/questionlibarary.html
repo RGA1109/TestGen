@@ -1,0 +1,123 @@
+{% include "main/navbar.html" %}
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static "css/tagcreator.css" %}">
+{% endblock %}
+
+<script src="{% static 'js/charts.js' %}"></script>
+
+<title>Question Library</title>
+
+<body>
+<div class="wrapper">
+    <div class="container shadow p-3 mb-5 bg-white rounded" style="position: absolute;top: 50px;">
+        <div class="row" style="margin-left:30px">
+            <div class="col-sm shadow">
+                <h2>Question Filter</h2>
+                <div class="row">
+                  <div class="container">
+                    <input class="form-control" id="myInput" type="text" placeholder="Search...">
+                    <div id="myDIV" oninput="showQuestion()">
+                      {% if all_questions %}
+                        {% for question in all_questions %}
+                            <ul><button onclick="myFunction('{{ question.question_details }}', '{{ question.question_answer }}')"
+                                  value="{{ question.question_details }}" id="{{ question.question_details }}"
+                                        style="display:none; margin-top:15px; border-radius:25px;">{{ question.question_details }}</button></ul>
+                        {% endfor %}
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="col-sm shadow p-3 mb-5 ml-5 mr-5 bg-white rounded" style="text-align:left; display:none;" id="myDIV2">
+                <!--- Question and Answer Section ---->
+                <div class="row">
+                    <div class="col-sm">
+                        <h2 style="margin-left:40px;">Question</h2>
+                        <div class="row">
+                            <div class="col-sm" style="margin-left:70px;" id="Question">
+                                <p id="demo"></p>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <h2 style="margin-left: 40px">Answer</h2>
+                        <div class="row">
+                            <div class="col-sm" style="margin-left:70px;" id="Answer">
+                                <p id="treno"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--- Statistical Data on the Question --->
+                <div class="row mt-5">
+                    <div class="col-sm">
+                        <h2>Tags on This Questions</h2>
+                        <div class="col-sm" style="margin-left:70px;" id="Tags">
+                            <p id="QuestionTags"></p>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <h2>Question Used</h2>
+                        <div class="col-sm" style="margin-left:70px;" id="TimesUsed">
+                            <p id="TimeQuestionsUsed"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!--- Chart data section --->
+                <div class="row">
+                    <div class="col-sm">
+
+                    </div>
+                    <canvas id="myChart" style="max-width: 500px;"></canvas>
+                    <div class="col-md-5">
+                        <canvas id="myChart"></canvas>
+                    </div>
+                    <canvas id="lineChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+<!--                <div class="row">-->
+<!--&lt;!&ndash;                    <div class="col-sm">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <label for="exampleFormControlSelect1">Question Tags</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <select class="form-control" id="exampleFormControlSelect1">&ndash;&gt;-->
+<!--&lt;!&ndash;                                <div class="col-sm" style="margin-left:70px;">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <option>   </option>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    {% if all_questions%}&ndash;&gt;-->
+<!--&lt;!&ndash;                                        {% for question in all_questions %}&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <option>{{ question.question_tags }}</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        {% endfor %}&ndash;&gt;-->
+<!--&lt;!&ndash;                                    {% endif %}&ndash;&gt;-->
+<!--&lt;!&ndash;                                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </select>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div class="col-sm">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <div class="form-group">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <label for="exampleFormControlSelect1">Question Details</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <select class="form-control" id="exampleFormControlSelect1">&ndash;&gt;-->
+<!--&lt;!&ndash;                                <div class="col-sm" style="margin-left:70px;">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <option>   </option>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    {% if all_questions%}&ndash;&gt;-->
+<!--&lt;!&ndash;                                        {% for question in all_questions %}&ndash;&gt;-->
+<!--&lt;!&ndash;                                            <option>{{ question.question_details }}</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        {% endfor %}&ndash;&gt;-->
+<!--&lt;!&ndash;                                    {% endif %}&ndash;&gt;-->
+<!--&lt;!&ndash;                                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </select>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--                </div>-->
+
+
+

@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <head>
+        <meta charset="UTF-8">
+        <title>Log In</title>
+    </head>
+<body class="text-center">
+    <div class="container">
+        <div class="row mt-5">
+            {% block content %}
+            <div class="row">
+                <h2> Log in </h2>
+            </div>
+            <div class="row mt-5">
+                 <form class="site-form" method="post">
+                {% csrf_token %}
+                {{ form }}
+                     <input type="submit" value="Login">
+                </form>
+            </div>
+
+            {% endblock %}
+        </div>
+
+        <div class="row mt-5">
+            <h3>If you are not registered click here</h3>
+            <div class="mt-5">
+                <a href="/signup"><input type="submit" style="border-radius:10px; background-color: #008CBA;" value="Sign up here"></a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,150 @@
+{% include "main/navbar.html" %}
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static "css/tagcreator.css" %}">
+{% endblock %}
+
+<title>Creating Questions</title>
+
+<script src="{% static 'js/creatingquestion.js' %}"></script>
+
+<body>
+<div class="wrapper">
+    <div class="container" style="margin:auto; padding:50px; position: absolute;top: 50px;">
+        <div class="row">
+            <div class="col-sm">
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="card shadow" style="border-radius: 20px 20px 0 0;">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <div class="form-check" style="margin-bottom:15px;">
+                                            <input class="form-check-input" type="radio" name="exampleRadios" onclick="showQuestion(id)" id="radio1" value="option1" checked>
+                                            <label class="form-check-label" for="radio1">
+                                                Multiple Choice
+                                            </label>
+                                        </div>
+                                        <div class="form-check" style="margin-bottom:15px;">
+                                            <input class="form-check-input" type="radio" name="exampleRadios" onclick="showQuestion(id)" id="radio2" value="option2">
+                                            <label class="form-check-label" for="radio2">
+                                                True / False
+                                            </label>
+                                        </div>
+                                        <div class="form-check" style="margin-bottom:15px;">
+                                            <input class="form-check-input" type="radio" name="exampleRadios" onclick="showQuestion(id)" id="radio3" value="option3">
+                                            <label class="form-check-label" for="radio3">
+                                                Short Answer
+                                            </label>
+                                        </div>
+                                        <div class="form-check" style="margin-bottom:15px;">
+                                            <input class="form-check-input" type="radio" name="exampleRadios" onclick="showQuestion(id)" id="radio4" value="option4">
+                                            <label class="form-check-label" for="radio4">
+                                                Matching
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm">
+                                        <div class="form-check" style="margin-bottom:15px;" >
+                                            <input class="form-check-input" type="radio" onclick="showQuestion(id)" name="exampleRadios" id="radio5" value="option5">
+                                            <label class="form-check-label" for="radio5">
+                                                Fill in the Blank
+                                            </label>
+                                        </div>
+                                        <div class="form-check" style="margin-bottom:15px;">
+                                            <input class="form-check-input" type="radio" name="exampleRadios" onclick="showQuestion(id)" id="radio6" value="option6">
+                                            <label class="form-check-label" for="radio6">
+                                                Fill in the Formula
+                                            </label>
+                                        </div>
+                                        <div class="form-check" style="margin-bottom:15px;">
+                                            <input class="form-check-input" type="radio" name="exampleRadios" onclick="showQuestion(id)" id="radio7" value="option7">
+                                            <label class="form-check-label" for="radio7">
+                                                Essay
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm">
+                        <form method="post" novalidate>
+                            <div class="card shadow" style="border:none; border-radius: 20px 20px 0 0;"
+                                 id="card-information">
+                                <div class="card-body" id="multichoice" style="display:none;">
+                                    <h3>Multi Choice</h3>
+                                    {% csrf_token %}
+                                    {{ form | linebreaks}}
+                                    <button type="submit">Submit</button>
+                                </div>
+                                <div class="card-body" id="true/false" style="display:none;">
+                                    <h3>True/False</h3>
+                                    {% csrf_token %}
+                                    {{ form | linebreaks}}
+                                    <button type="submit">Submit</button>
+                                </div>
+                                <div class="card-body" id="shortanswer" style="display:none;">
+                                    <h3>Short Answer</h3>
+                                    {% csrf_token %}
+                                    {{ form | linebreaks}}
+                                    <button type="submit">Submit</button>
+                                </div>
+                                <div class="card-body" id="matching" style="display:none;">
+                                    <h3>Matching</h3>
+                                    {% csrf_token %}
+                                    {{ form | linebreaks}}
+                                    <button type="submit">Submit</button>
+                                </div>
+                                <div class="card-body" id="fillblank" style="display:none;">
+                                    <h3>Fill in the Blank</h3>
+                                    {% csrf_token %}
+                                    {{ form | linebreaks}}
+                                    <button type="submit">Submit</button>
+                                </div>
+                                <div class="card-body" id="fillformaula" style="display:none;">
+                                    <h3>Fill in the Formula</h3>
+                                    {% csrf_token %}
+                                    {{ form | linebreaks}}
+                                    <button type="submit">Submit</button>
+                                </div>
+                                <div class="card-body" id="essay" style="display:none;">
+                                    <h3>Essay</h3>
+                                    {% csrf_token %}
+                                    {{ form | linebreaks}}
+                                    <button type="submit">Submit</button>
+                                </div>
+                            </div>
+                            <div style="border:none;" id="card-information">
+                                <div class="card shadow" id="tagsfield" style="display:none; margin-top:50px;">
+                                    <div class="card-body">
+                                        <div class="container">
+                                            <h2> Tag Search </h2>
+                                            <input class="form-control" id="myInput" type="text" placeholder="Search...">
+                                            <div id="myDIV" style="display:none;">
+                                                {% if all_tags %}
+                                                {% for tag in all_tags %}
+                                                    <label>
+                                                        <input type="radio"
+                                                               id="{{ tag.tag_name }}" name="{{ tag.tag_name }}" value="{{ tag.tag_name }}"
+                                                        >{{tag.tag_name}}<br>
+                                                    </label>
+                                                 {% endfor %}
+                                                 {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>

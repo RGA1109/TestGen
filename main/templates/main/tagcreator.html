@@ -1,0 +1,89 @@
+{% include "main/navbar.html" %}
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static "css/tagcreator.css" %}">
+{% endblock %}
+
+<script src="{% static 'js/charts.js' %}"></script>
+
+<title>Tag Creator</title>
+
+<body>
+<div class="wrapper">
+    <div class="container shadow p-3 mt-5 bg-white rounded" style="position: absolute;top: 50px;">
+        <div class="row">
+            <div class="col-sm">
+                <h2 style="text-center"> Tag Search </h2>
+                <input class="form-control" id="myInput" type="text" placeholder="Search...">
+                <div id="myDIV">
+                    <form>
+                        {% if all_tags %}
+                        {% for tag in all_tags %}
+                        <ul><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"
+                                    value="{{ tag.tag_id}}" id="{{ tag.tag_id }}" onclick="passingId({{ tag.tag_name }})"
+                                    style="display:none; margin-top:15px;"> {{ tag.tag_name }} </button></ul>
+                        {% endfor %}
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+
+                <div class="col-sm">
+                    <h2 style="text-center"> Tag Creator </h2>
+<!--                    <form action="/create_post/" method="POST" id="post-form">-->
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+                        {{ form }}
+                        <button type="submit">Generate</button>
+                    </form>
+                </div>
+            </div>
+
+            <!--- implement this into scoll bar at end --->
+            <div class="row mt-5" >
+                {% if top %}
+                {% for tag in top %}
+                <ul>
+                    <button value="{{ tag.tag_name }}" id="{{ tag.tag_name }}" data-toggle="modal"
+                            data-target="#myModal" style="margin-top:15px; border-radius:25px;"
+                            onclick="passingId({{ tag.tag_name }})">
+                        {{ tag.tag_name }}
+                    </button>
+                </ul>
+                {% if forloop.counter|divisibleby:2 %}
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+<!-- Modal to confirm delete -->
+  <div class="modal" id="myModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal Title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Would you like to delete this tag</p>
+                </div>
+                <div class="modal-footer">
+                    {% csrf_token %}
+                    <button class="delete form" type="button" id="delete"
+                            data-class="btn btn-primary" value="Delete Question" onclick="onModalButtonPress()" data-dismiss="modal">Button</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--</form>-->
+<script type="text/javascript">
+    $.ajaxSetup({   data: {csrfmiddlewaretoken: '{{ csrf_token }}' }, }); 
+</script>
+</body>
+
+
